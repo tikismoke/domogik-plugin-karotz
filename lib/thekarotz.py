@@ -115,7 +115,7 @@ class Karotz(BaseClientService):
 
     def earpos(self, position, ears):
         print("ear : entrée")
-        url_sms = "http://" + self.address + "/cgi-bin/&pos" + ears + "=" + position
+        url_sms = "http://" + self.address + "/cgi-bin/ears?" + ears + "=" + position + "&noreset=1"
         result = self.request(url_sms)
         if result['error'] != '':
             return {'status': 'Ear position error', 'error': error}
@@ -143,9 +143,9 @@ class Karotz(BaseClientService):
         elif 'wakeup' in message:
             result = self.action("wakeup?silent=1")
         elif 'posleft' in message:
-            result = self.earpos(message['posleft'], "left")
+            result = self.earpos(message['posleft'], "right=0&left")
         elif 'posright' in message:
-            result = self.earpos(message['posright'], "right")
+            result = self.earpos(message['posright'], "left=0&right")
         else:
             result = "error"
         print result
