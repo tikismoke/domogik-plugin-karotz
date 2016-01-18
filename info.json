@@ -205,7 +205,7 @@
           "xpl": false,
           "description": "Voice list of kartoz.",
           "type": "string"
-        },
+        }
       ]
     }
   },
