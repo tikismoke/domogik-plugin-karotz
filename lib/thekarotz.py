@@ -146,7 +146,10 @@ class Karotz(BaseClientService):
             result = self.earpos(message['posleft'], "right=0&left")
         elif 'posright' in message:
             result = self.earpos(message['posright'], "left=0&right")
-        else:
+        #elif 'colo' in message:
+	#   resul = self.color()
+	#/cgi-bin/leds?pulse=1&color=00FF00&speed=700&color2=000000
+	else:
             result = "error"
         print result
         return result
