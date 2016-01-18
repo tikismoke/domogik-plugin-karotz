@@ -1,10 +1,10 @@
 {
   "products": [
     {
-      "name": "Nabaztag",
-      "id": "Nabaztag_client",
+      "name": "Karotz",
+      "id": "Karotz_client",
       "documentation": "",
-      "type": "nabaztag"
+      "type": "karotz"
     }
   ],
   "configuration": [],
@@ -170,10 +170,10 @@
     }
   },
   "device_types": {
-    "nabaztag": {
-      "description": "Send message to nabaztag.",
-      "id": "nabaztag",
-      "name": "nabaztag tts service",
+    "karotz": {
+      "description": "Send message to karotz.",
+      "id": "karotz",
+      "name": "karotz tts service",
       "commands": [
         "send_msg",
         "wakeup",
@@ -189,35 +189,23 @@
         {
           "key": "to",
           "xpl": true,
-          "description": "Source title set in Nabaztag config.",
+          "description": "Source title set in Karotz config.",
           "type": "string"
         },
         {
-          "default": "openjabnab.fr",
+          "default": "192.168.x.x",
           "key": "address",
           "xpl": false,
-          "description": "Address of your openjabnab server",
+          "description": "IP address of your karotz",
           "type": "string"
         },
         {
           "default": "voice=claire",
           "key": "voice",
           "xpl": false,
-          "description": "Voice list of nabaztag. Nabaztag voice. Can be voice=xx or ws_kajedo=xxxx or ws_acapela=xxxx",
+          "description": "Voice list of kartoz.",
           "type": "string"
         },
-        {
-          "key": "mac",
-          "xpl": false,
-          "description": "Mac address of the nabaztag.",
-          "type": "string"
-        },
-        {
-          "key": "violet_token",
-          "xpl": false,
-          "description": "Violet API token.",
-          "type": "string"
-        }
       ]
     }
   },
@@ -229,9 +217,9 @@
       "notification"
     ],
     "dependencies": [],
-    "description": "Interact with Nabaztag based on violet API",
+    "description": "Interact with Karotz based on OpenKarotz API",
     "domogik_min_version": "0.4.0",
-    "name": "nabaztag",
+    "name": "karotz",
     "type": "plugin",
     "version": "0.0.1"
   },

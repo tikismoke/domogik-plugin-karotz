@@ -30,7 +30,7 @@ This is an upgrade based on sms plugin for domogik 0.3
 Implements
 ========
 
-- class NabaztagClient to handle SMS
+- class KarotzClient to handle SMS
 
 @author: Nico <nico84dev@gmail.com>
 @copyright: (C) 2007-2014 Domogik project
@@ -42,31 +42,31 @@ import json
 import threading
 import time
 import sys
-from domogik_packages.plugin_nabaztag.lib.client_devices import createDevice, OPERATORS_SERVICE
+from domogik_packages.plugin_karotz.lib.client_devices import createDevice, OPERATORS_SERVICE
 
 
-class NabaztagClientException(Exception):
+class KarotzClientException(Exception):
     """
-    NAbaztagClient exception
+    KarotzClient exception
     """
 
     def __init__(self, value):
         Exception.__init__(self)
-        self.value = "NabaztagClient exception, " + value
+        self.value = "KarotzClient exception, " + value
 
     def __str__(self):
         return repr(self.value)
 
 
 def getClientId(device):
-    """Return key Nabaztag client id."""
+    """Return key Karotz client id."""
     if device.has_key('name') and device.has_key('id'):
         return "{0}_{1}".format(device['name'], + device['id'])
     else:
         return None
 
 
-class NabaztagClient:
+class KarotzClient:
     "Objet client de base pour la liaison operateur de Notification."
 
     def __init__(self, manager, params, log):
@@ -89,7 +89,7 @@ class NabaztagClient:
 
     def close(self):
         """Send Xpl message and Close updater timers."""
-        self._log.info("Close nabaztag client {0}".format(self.name))
+        self._log.info("Close karotz client {0}".format(self.name))
 
     def updateDevice(self, params):
         """Update device data."""
@@ -109,39 +109,39 @@ class NabaztagClient:
         '''
         if xPLmessage.has_key('to'):
                 if xPLmessage.has_key('body'):
-                    self._log.debug(u"NAbaztag Client, recieved command body {0}".format(xPLmessage))
+                    self._log.debug(u"Karotz Client, recieved command body {0}".format(xPLmessage))
                     xPLmessage['header'] = self._manager._xplPlugin.get_config("msg_header")
                     data = self._operator.send(xPLmessage)
                     if data['error'] == '': del data['error']
                     data['to'] = self.domogikDevice
                     self._manager.sendXplAck(data)
                 elif xPLmessage.has_key('wakeup'):
-                    self._log.debug(u"NAbaztag Client, recieved command wakeup {0}".format(xPLmessage))
+                    self._log.debug(u"Karotz Client, recieved command wakeup {0}".format(xPLmessage))
                     xPLmessage['header'] = self._manager._xplPlugin.get_config("msg_header")
                     data = self._operator.send(xPLmessage)
                     if data['error'] == '': del data['error']
                     data['to'] = self.domogikDevice
                     self._manager.sendXplAck(data)
                 elif xPLmessage.has_key('sleep'):
-                    self._log.debug(u"NAbaztag Client, recieved command sleep {0}".format(xPLmessage))
+                    self._log.debug(u"Karotz Client, recieved command sleep {0}".format(xPLmessage))
                     xPLmessage['header'] = self._manager._xplPlugin.get_config("msg_header")
                     data = self._operator.send(xPLmessage)
                     if data['error'] == '': del data['error']
                     data['to'] = self.domogikDevice
                     self._manager.sendXplAck(data)
                 elif xPLmessage.has_key('posleft'):
-                    self._log.debug(u"NAbaztag Client, recieved command to move left ear {0}".format(xPLmessage))
+                    self._log.debug(u"Karotz Client, recieved command to move left ear {0}".format(xPLmessage))
                     xPLmessage['header'] = self._manager._xplPlugin.get_config("msg_header")
                     data = self._operator.send(xPLmessage)
                     if data['error'] == '': del data['error']
                     data['to'] = self.domogikDevice
                     self._manager.sendXplAck(data)
                 elif xPLmessage.has_key('posright'):
-                    self._log.debug(u"NAbaztag Client, recieved command to move right ear {0}".format(xPLmessage))
+                    self._log.debug(u"Karotz Client, recieved command to move right ear {0}".format(xPLmessage))
                     xPLmessage['header'] = self._manager._xplPlugin.get_config("msg_header")
                     data = self._operator.send(xPLmessage)
                     if data['error'] == '': del data['error']
                     data['to'] = self.domogikDevice
                     self._manager.sendXplAck(data)
         else:
-            self._log.debug(u"Nabaztag Client, recieved unknown command {0}".format(xPLmessage))
+            self._log.debug(u"Karotz Client, recieved unknown command {0}".format(xPLmessage))

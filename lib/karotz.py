@@ -3,59 +3,59 @@
 
 # import PyNUT
 import time
-from domogik_packages.plugin_nabaztag.lib.nabaztag_client import NabaztagClient, getClientId
-from domogik_packages.plugin_nabaztag.lib.client_devices import GetDeviceParams, OPERATORS_SERVICE
+from domogik_packages.plugin_karotz.lib.karotz_client import KarotzClient, getClientId
+from domogik_packages.plugin_karotz.lib.client_devices import GetDeviceParams, OPERATORS_SERVICE
 
 
-class NabaztagClientsManagerException(Exception):
+class KarotzClientsManagerException(Exception):
     """
-    Nabaztag Manager exception
+    Karotz Manager exception
     """
 
     def __init__(self, value):
         Exception.__init__(self)
-        self.value = "NabaztagClientsManager exception" + value
+        self.value = "KarotzClientsManager exception" + value
 
     def __str__(self):
         return repr(self.value)
 
 
-class NabaztagClientsManager:
+class KarotzClientsManager:
     """
-    Manager Nabaztag Web Clients.
+    Manager Karotz Web Clients.
     """
 
     def __init__(self, xplPlugin, cb_send_xPL):
-        """Init manager Nabaztag Clients"""
+        """Init manager Karotz Clients"""
         self._xplPlugin = xplPlugin
         self._cb_send_xPL = cb_send_xPL
-        self.clients = {}  # list of all Nabaztag Clients
-        self._xplPlugin.log.info(u"Manager Nabaztag Clients is ready.")
+        self.clients = {}  # list of all Karotz Clients
+        self._xplPlugin.log.info(u"Manager Karotz Clients is ready.")
 
     def _del__(self):
-        """Delete all Nabaztag CLients"""
-        print "try __del__ NabaztagClients"
+        """Delete all Karotz CLients"""
+        print "try __del__ KarotzClients"
         for id in self.clients: self.clients[id] = None
 
     def stop(self):
-        """Close all Nabaztag CLients"""
-        self._xplPlugin.log.info(u"Closing NabaztagManager.")
+        """Close all Karotz CLients"""
+        self._xplPlugin.log.info(u"Closing KarotzManager.")
         for id in self.clients: self.clients[id].close()
 
     def addClient(self, instance):
-        """Add a Nabaztag from domogik instance"""
+        """Add a Karotz from domogik instance"""
         name = getClientId(instance)
         if self.clients.has_key(name):
-            self._xplPlugin.log.debug(u"Manager Client : Nabaztag Client {0} already exist, not added.".format(name))
+            self._xplPlugin.log.debug(u"Manager Client : Karotz Client {0} already exist, not added.".format(name))
             return False
         else:
             params = GetDeviceParams(self._xplPlugin, instance)
             if params:
                 if params['operator'] in OPERATORS_SERVICE:
-                    self.clients[name] = NabaztagClient(self, params, self._xplPlugin.log)
+                    self.clients[name] = KarotzClient(self, params, self._xplPlugin.log)
                 else:
                     self._xplPlugin.log.error(
-                        u"Manager Client : Nabaztag Client type {0} not exist, not added.".format(name))
+                        u"Manager Client : Karotz Client type {0} not exist, not added.".format(name))
                     return False
                 self._xplPlugin.log.info(u"Manager Client : created new client {0}.".format(name))
             else:
@@ -65,31 +65,31 @@ class NabaztagClientsManager:
             return True
 
     def removeClient(self, name):
-        """Remove a Nabaztag client and close it"""
+        """Remove a Karotz client and close it"""
         client = self.getClient(name)
         if client:
             client.close()
             self.clients.pop(name)
 
     def getClient(self, id):
-        """Get Nabaztag client object by id."""
+        """Get Karotz client object by id."""
         if self.clients.has_key(id):
             return self.clients[id]
         else:
             return None
 
     def getIdsClient(self, idToCheck):
-        """Get Nabaztag client key ids."""
+        """Get Karotz client key ids."""
         retval = []
         findId = ""
         self._xplPlugin.log.debug(u"getIdsClient check for device : {0}".format(idToCheck))
-        if isinstance(idToCheck, NabaztagClient):
+        if isinstance(idToCheck, KarotzClient):
             for id in self.clients.keys():
                 if self.clients[id] == idToCheck:
                     retval = [id]
                     break
         else:
-            self._xplPlugin.log.debug(u"getIdsClient, no NabaztagClient instance...")
+            self._xplPlugin.log.debug(u"getIdsClient, no KarotzClient instance...")
             if isinstance(idToCheck, str):
                 findId = idToCheck
                 self._xplPlugin.log.debug(u"str instance...")
@@ -110,13 +110,13 @@ class NabaztagClientsManager:
                     self._xplPlugin.log.debug(
                         u"Search in list by device key : {0}".format(self.clients[id].domogikDevice))
                     if self.clients[id].domogikDevice == findId:
-                        self._xplPlugin.log.debug('find Nabaztag Client :)')
+                        self._xplPlugin.log.debug('find Karotz Client :)')
                         retval.append(id)
         self._xplPlugin.log.debug(u"getIdsClient result : {0}".format(retval))
         return retval
 
     def refreshClientDevice(self, client):
-        """Request a refresh domogik device data for a Nabaztag Client."""
+        """Request a refresh domogik device data for a Karotz Client."""
         cli = MQSyncReq(zmq.Context())
         msg = MQMessage()
         msg.set_action('device.get')
@@ -130,7 +130,7 @@ class NabaztagClientsManager:
                 if a_device['name'] != client.device['name']:  # rename and change key client id
                     old_id = getClientId(client._device)
                     self.clients[getClientId(a_device)] = self.clients.pop(old_id)
-                    self._xplPlugin.log.info(u"Nabaztag Client {0} is rename {1}".format(old_id, getClientId(a_device)))
+                    self._xplPlugin.log.info(u"Karotz Client {0} is rename {1}".format(old_id, getClientId(a_device)))
                 client.updateDevice(a_device)
                 break
 

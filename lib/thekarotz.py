@@ -28,7 +28,7 @@ Send Notification to karotz using tts.
 Implements
 ========
 
-- Class Nabaztag
+- Class Karotz
 
 @author: Nico <nico84dev@gmail.com>
 @copyright: (C) 2007-2014 Domogik project
@@ -38,12 +38,12 @@ Implements
 
 import urllib, urllib2
 import json
-# from domogik_packages.plugin_nabaztag.lib.client_devices import BaseClientService
+# from domogik_packages.plugin_karotz.lib.client_devices import BaseClientService
 from client_devices import BaseClientService
 
 
-class Nabaztag(BaseClientService):
-    """ Notification Control nabaztag using tts
+class Karotz(BaseClientService):
+    """ Notification Control karotz using tts
     """
 
     def update(self, params):
@@ -55,14 +55,12 @@ class Nabaztag(BaseClientService):
         """
         self.to = params['to']
         self.address = params['address'] if 'address' in params else None
-        self.violet_token = params['violet_token']
         self.voice = params['voice']
-        self.mac = params['mac']
-
+        
     def send_msg(self, body):
         print("send_msg : entrée")
         data = urllib.urlencode({'tts': "{0}".format(body)})
-        url_sms = "http://" + self.address + "/ojn/FR/api.jsp?&sn=" + self.mac + "&token=" + self.violet_token + "&voice=" + self.voice + "&" + data
+        url_sms = "http://" + self.address + "/cgi-bin/tts?voice=alice&nocache=0&voice=" + self.voice + "&text=" + data
         request = url_sms
         print "http request : \n", request
         try:
@@ -103,7 +101,7 @@ class Nabaztag(BaseClientService):
 
     def action(self, actioncode):
         print("action : entrée")
-        url_sms = "http://" + self.address + "/ojn/FR/api.jsp?&sn=" + self.mac + "&token=" + self.violet_token + "&action=" + actioncode
+        url_sms = "http://" + self.address + "/cgi-bin/" + actioncode
         request = url_sms
         print "http request : \n", request
         try:
@@ -158,9 +156,9 @@ class Nabaztag(BaseClientService):
             msg = msg + message['body']
             result = self.send_msg(msg)
         elif 'sleep' in message:
-            result = self.action("13")
+            result = self.action("sleep")
         elif 'wakeup' in message:
-            result = self.wakeup("13")
+            result = self.wakeup("wakeup?silent=1")
         else:
             result = "error"
         print result

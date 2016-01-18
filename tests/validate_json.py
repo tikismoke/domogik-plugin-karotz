@@ -2,7 +2,7 @@
 #-*- coding: utf-8 -*-
 
 ### configuration ###########################################
-plugin = "nabaztag"
+plugin = "karotz"
 ########################################################
 
 import json

@@ -11,7 +11,7 @@ mysql:
   encoding: utf8
 env:
   DMG_BRANCH=master
-  DMG_PLUGIN=wol
+  DMG_PLUGIN=karotz
 install:
   - cd ~
   - git clone https://github.com/domogik/domogik.git

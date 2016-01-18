@@ -1,7 +1,9 @@
-domogik-plugin-nabaztag
-=======================
+domogik-plugin-karotz
+=====================
 
-A domogik (www.domogik.org) plugin to interact with nabaztag:
+A domogik (www.domogik.org) plugin to interact with Karotz:
+
+http://domogik-plugin-karotz.readthedocs.org/
 
 - Sleep.
 - Wakeup.

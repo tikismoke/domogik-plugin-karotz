@@ -37,16 +37,16 @@ Implements
 @license: GPL(v3)
 @organization: Domogik
 """
-OPERATORS_SERVICE = ['Nabaztag']
+OPERATORS_SERVICE = ['Karotz']
 
 
 def createDevice(params, log=None):
     """ Create a device depending of operator, use instance for get parameters.
         - Developer : add your python class derived from DeviceBase class."""
     newOperator = None
-    if params['operator'] == 'Nabaztag':
-        from domogik_packages.plugin_nabaztag.lib.thenabaztag import Nabaztag
-        newOperator = Nabaztag(params, log)
+    if params['operator'] == 'Karotz':
+        from domogik_packages.plugin_karotz.lib.thekarotz import Karotz
+        newOperator = Karotz(params, log)
     return newOperator
 
 
@@ -64,8 +64,8 @@ def GetDeviceParams(xplPlugin, device):
                 type : dict
     """
     print "Extract parameters from device : \n{0}".format(device)
-    if device['device_type_id'] == 'nabaztag':
-        operator = 'Nabaztag'
+    if device['device_type_id'] == 'karotz':
+        operator = 'Karotz'
         id = xplPlugin.get_parameter_for_feature(device, 'xpl_stats', 'xPL_ack-msg', 'to')
         address = xplPlugin.get_parameter(device, 'address')
         violet_token = xplPlugin.get_parameter(device, 'violet_token')

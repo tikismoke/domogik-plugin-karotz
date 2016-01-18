@@ -2,8 +2,6 @@
 Plugin documentation
 ====================
 
-.. |icon| image:: icon.png
-    :width: 64px
 
 |icon|
 
@@ -14,7 +12,7 @@ Last change
 
 Purpose
 =======
-This Domogik plugin Nabaztag text_to_speech management is an external service provide by an OpenJabNab Server
+This Domogik plugin Karotz text_to_speech management is an external service provide by an OpenKarotz
 
 
 Plugin configuration
@@ -36,25 +34,21 @@ In clients page of admin UI, go to **plugin-nabaztag-<your_host_domogik>**, sele
 
 Chose one way creation by product or device type.
 
-device_types : nabaztag
+device_types : karotz
 ***********************
 
 +-------------------+-------------------+------------------------------------------------------------------------------+
 | Key               | Example           | Description                                                                  |
 +===================+===================+==============================================================================+
-| Device            | my Nabaztag       | The display name for this device.                                            |
+| Device            | my Karotz		| The display name for this device.                                            |
 +-------------------+-------------------+------------------------------------------------------------------------------+
 | Description       | What you want     | A short description for this device.                                         |
 +-------------------+-------------------+------------------------------------------------------------------------------+
 | Reference         | What you want     | A Reference for this device.                                                 |
 +-------------------+-------------------+------------------------------------------------------------------------------+
-| address           | openjabanab.fr    | Dddress of you openjabnab server                                             |
+| address           | 192.168.x.xx	| Ip address of you karotz		                                       |
 +-------------------+-------------------+------------------------------------------------------------------------------+
-| voice             | voice=claire      | Nabaztag voice. Can be voice=xx or ws_kajedo=xxxx or ws_acapela=xxxx         |
-+-------------------+-------------------+------------------------------------------------------------------------------+
-| mac               | 00AABBCCDDFF      | Mac address of your nabaztag                                                 |
-+-------------------+-------------------+------------------------------------------------------------------------------+
-| violet_token      | d2c014f3d2c014f3  | Violet Api TOKEN.                                                            |
+| voice             | voice=claire      | Karotz voice. 							       |
 +-------------------+-------------------+------------------------------------------------------------------------------+
 | Global to         |                   |                                                                              |
 +-------------------+-------------------+------------------------------------------------------------------------------+

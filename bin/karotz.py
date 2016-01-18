@@ -22,15 +22,13 @@ along with Domogik. If not, see U{http://www.gnu.org/licenses}.
 Plugin purpose
 ==============
 
-Interact with nabaztag
+Interact with karotz
 
-This is an upgrade based on nabaztag plugin for domogik 0.3
-@author: Gizmo - Guillaume MORLET <contact@gizmo-network.fr>
 
 Implements
 ========
 
-- Nabaztag violet API
+- Karotz OpenKarotz API
 
 @author: Tikismoke <new.domodroid@gmail.com>
 @copyright: (C) 2013-2016 Domogik project
@@ -43,40 +41,40 @@ try:
     from domogik.xpl.common.xplmessage import XplMessage
     from domogik.xpl.common.plugin import XplPlugin
 
-    from domogik_packages.plugin_nabaztag.lib.nabaztag import NabaztagClientsManager
-    from domogik_packages.plugin_nabaztag.lib.nabaztag_client import getClientId
+    from domogik_packages.plugin_karotz.lib.karotz import KarotzClientsManager
+    from domogik_packages.plugin_karotz.lib.karotz_client import getClientId
 
     import traceback
 except ImportError as exc:
     import logging
 
-    logging.basicConfig(filename='/var/log/domogik/nabaztag_start_error.log', level=logging.DEBUG)
-    log = logging.getLogger('NabaztagManager_start_error')
+    logging.basicConfig(filename='/var/log/domogik/karotz_start_error.log', level=logging.DEBUG)
+    log = logging.getLogger('KarotzManager_start_error')
     err = "Error: Plugin Starting failed to import module ({})".format(exc)
     print err
     logging.error(err)
     print log
 
 
-class NabaztagManager(XplPlugin):
+class KarotzManager(XplPlugin):
     """ Envois et recois des codes xPL des notifications
     """
 
     def __init__(self):
         """ Init plugin
         """
-        XplPlugin.__init__(self, name='nabaztag')
+        XplPlugin.__init__(self, name='karotz')
 
         # get the devices list
         self.devices = self.get_device_list(quit_if_no_device=False)
         # get the config values
-        self.managerClients = NabaztagClientsManager(self, self.send_xplTrig)
+        self.managerClients = KarotzClientsManager(self, self.send_xplTrig)
         for a_device in self.devices:
             try:
                 if self.managerClients.addClient(a_device):
                     self.log.info("Ready to work with device {0}".format(getClientId(a_device)))
                 else:
-                    self.log.info("Device parameters not configured, can't create Nabaztag Client : {0}".format(
+                    self.log.info("Device parameters not configured, can't create Karotz Client : {0}".format(
                         getClientId(a_device)))
             except:
                 self.log.error(traceback.format_exc())
@@ -139,11 +137,11 @@ class NabaztagManager(XplPlugin):
             for id in idsClient:
                 client = self.managerClients.getClient(id)
                 if client:
-                    self.log.debug("Handle xpl-cmds for Nabaztag client :{0}".format(message.data['to']))
+                    self.log.debug("Handle xpl-cmds for Karotz client :{0}".format(message.data['to']))
                     find = True
                     client.handle_xpl_cmd(message.data)
-        if not find: self.log.debug("xpl-cmds received for unknowns Nabaztag client :{0}".format(message.data['to']))
+        if not find: self.log.debug("xpl-cmds received for unknowns Karotz client :{0}".format(message.data['to']))
 
 
 if __name__ == "__main__":
-    NabaztagManager()
+    KarotzManager()
