@@ -68,12 +68,9 @@ def GetDeviceParams(xplPlugin, device):
         operator = 'Karotz'
         id = xplPlugin.get_parameter_for_feature(device, 'xpl_stats', 'xPL_ack-msg', 'to')
         address = xplPlugin.get_parameter(device, 'address')
-        violet_token = xplPlugin.get_parameter(device, 'violet_token')
-        mac = xplPlugin.get_parameter(device, 'mac')
         voice = xplPlugin.get_parameter(device, 'voice')
-        if operator and device["name"] and id and address and violet_token and mac and voice:
-            params = {'name': device["name"], 'operator': operator, 'to': id, 'address': address,
-                      'violet_token': violet_token, 'mac': mac, 'voice': voice}
+        if operator and device["name"] and id and address and voice:
+            params = {'name': device["name"], 'operator': operator, 'to': id, 'address': address, 'voice': voice}
             return params
     return None
 
