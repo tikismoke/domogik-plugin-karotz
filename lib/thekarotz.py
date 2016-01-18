@@ -96,8 +96,8 @@ class Karotz(BaseClientService):
 
     def send_msg(self, body):
         print("send_msg : enter")
-        data = urllib.urlencode({'tts': "{0}".format(body)})
-        url_sms = "http://" + self.address + "/cgi-bin&" + self.voice + "&" + data
+        data = urllib.urlencode({'text': "{0}".format(body)})
+        url_sms = "http://" + self.address + "/cgi-bin/tts?" + self.voice + "&" + data
         result = self.request(url_sms)
         if result['error'] != '':
             return {'status': 'TTS not sended', 'error': error}
