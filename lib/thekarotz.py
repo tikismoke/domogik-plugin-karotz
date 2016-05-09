@@ -74,11 +74,29 @@ class Karotz(BaseClientService):
             else:
                 error = format(e)
             return {'status': 'TTS not sended', 'error': error}
+        except urllib2.URLError, e:
+            # For Python 2.6
+            if isinstance(e.reason, socket.timeout):
+                error = ("There was an error: %r" % e)
+                return {'status': 'TTS not sended', 'error': error}
+        except socket.timeout, e:  # For Python 2.7
+            error = 'There was an error: %r" % e)'
+            return {'status': 'TTS not sended', 'error': error}
         else:
             codeResult = response.getcode()
+	    data = response.read()
             response.close()
             if codeResult == 200:
                 error = ''  # Le SMS a été envoyé sur votre mobile.
+                if 'msg' in data:
+		    print data
+		    #dumps the json object into an element
+		    json_str = json.dumps(data)
+		    print json_str
+		    #load the json to a string
+		    resp = json.loads(data)
+		    print resp
+		    error = resp['msg']
             elif codeResult == 400:
                 error = 'A mandatory parameter is missing'  # Un des paramètres obligatoires est manquant.
             elif codeResult == 402:
@@ -87,40 +105,31 @@ class Karotz(BaseClientService):
                 error = 'The service is not enabled on the subscriber area, or login / incorrect key.'  # Le service n’est pas activé sur l’espace abonné, ou login / clé incorrect.
             elif codeResult == 500:
                 error = 'Server side error. Please try again later.'  # Erreur côté serveur. Veuillez réessayez ultérieurement.
-            else:
+	    else:
                 error = 'Unknown error.'
         if error != '':
-            return {'status': 'not sended', 'error': error}
+            return {'status': 'Not sended', 'error': error}
         else:
-            return {'status': 'Sent', 'error': ''}
+            return {'status': 'Sent', 'error': 'none'}
 
     def send_msg(self, body):
         print("send_msg : enter")
         data = urllib.urlencode({'text': "{0}".format(body)})
         url_sms = "http://" + self.address + "/cgi-bin/tts?" + self.voice + "&" + data
         result = self.request(url_sms)
-        if result['error'] != '':
-            return {'status': 'TTS not sended', 'error': error}
-        else:
-            return {'status': 'TTS Sent', 'error': ''}
+        return result
 
     def action(self, actioncode):
         print("action : entrée")
         url_sms = "http://" + self.address + "/cgi-bin/" + actioncode
         result = self.request(url_sms)
-        if result['error'] != '':
-            return {'status': 'Action error', 'error': error}
-        else:
-            return {'status': 'Action done', 'error': ''}
+        return result
 
     def earpos(self, position, ears):
         print("ear : entrée")
         url_sms = "http://" + self.address + "/cgi-bin/ears?" + ears + "=" + position + "&noreset=1"
         result = self.request(url_sms)
-        if result['error'] != '':
-            return {'status': 'Ear position error', 'error': error}
-        else:
-            return {'status': 'Ear position done', 'error': ''}
+        return result
 
     def send(self, message):
         """ Send message
